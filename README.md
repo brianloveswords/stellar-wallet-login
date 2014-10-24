@@ -3,6 +3,12 @@
 Get an authorization token for the Stellar Wallet with a username and
 password. Works in node and in the browser (with browserify).
 
+## Install
+
+```bash
+$ npm install stellar-wallet-login
+```
+
 ## Example
 
 ```js

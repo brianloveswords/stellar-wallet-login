@@ -1,5 +1,5 @@
 {
-    "name": "stellar-login",
+    "name": "stellar-wallet-login",
     "version": "1.0.0",
     "description": "Get an auth token for stellar",
     "license": "MIT",

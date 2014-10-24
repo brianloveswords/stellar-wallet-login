@@ -8,7 +8,7 @@ const concat = require('concat-stream');
 function login(opts, callback) {
   const username = opts.username || opts.user;
   const password = opts.password || opts.pass;
-  const walletURL = opts.walletURL || 'https://wallet.stellar.org/wallets/show';
+  const walletURL = opts.url || 'https://wallet.stellar.org/wallets/show';
 
   if (!username || !password) {
     return callback(new Error('must provide a username and password'));

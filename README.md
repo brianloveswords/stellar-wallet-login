@@ -11,8 +11,12 @@ var login = require('stellar-wallet-login');
 login({
   user: 'awesome_username',
   pass: 'totally unguessable passphrase',
+  // optional
+  // wallet: 'http://some-custom-wallet-url.biz'
 }, function(err, token, raw) {
-  // `token` is the authorization token
-  // `raw` is the raw data object returned from stellar.
+  /*
+   `token` is the authorization token
+   `raw` is the raw data object returned from stellar.
+  */
 })
 ```

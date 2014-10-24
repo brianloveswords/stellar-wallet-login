@@ -1,8 +1,20 @@
 {
-  "dependencies": {
-    "concat-stream": "^1.4.6",
-    "js-scrypt": "^0.2.0",
-    "tape": "^3.0.1",
-    "xhr": "^1.17.0"
-  }
+    "name": "stellar-login",
+    "version": "1.0.0",
+    "description": "Get an auth token for stellar",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/brianloveswords/stellar-login"
+    },
+    "dependencies": {
+        "concat-stream": "^1.4.6",
+        "js-scrypt": "git://github.com/brianloveswords/node-js-scrypt#v0.2.0-no-childprocess",
+        "nets": "^1.0.0",
+        "tape": "^3.0.1",
+        "xhr": "^1.17.0"
+    },
+    "scripts": {
+        "test": "tape test/*.js"
+    }
 }

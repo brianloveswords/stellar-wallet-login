@@ -1,6 +1,6 @@
 module.exports = login;
 
-const https = require('https');
+const nets = require('nets');
 const scrypt = require('js-scrypt');
 const url = require('url');
 const concat = require('concat-stream');
@@ -23,36 +23,32 @@ function login(opts, callback) {
 
   // The stellar wallet requires that the salt be the same as the hash
   // input (the concatenation of username + password).
-  scrypt.hash(hashInput, hashInput, options, function (err, hash, raw) {
+  scrypt.hash(hashInput, hashInput, options, function (err, hash) {
     const id = hash.toString('hex');
 
-    const options = (url.parse(walletURL));
-    options.method = 'POST';
-    options.headers = {'Content-Type': 'application/json'};
+    const options = {
+      url: walletURL,
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({id: id}),
+    };
 
-    const req = https.request(options, function (res) {
-      res.pipe(concat(function (data) {
-        var response;
+    nets(options, function (err, res, body) {
+      if (err)
+        return callback(err);
 
-        try {
-          response = JSON.parse(data);
-        } catch (err) {
-          return callback(new Error('Could not parse response as JSON: ' + data.toString()));
-        }
+      var response;
+      try {
+        response = JSON.parse(body);
+      } catch (error) {
+        return callback(new Error('Could not parse response as JSON: ' + body.toString()));
+      }
 
-        if (res.statusCode !== 200) {
-          return callback(new Error('Could not login: ' + data.toString()));
-        }
+      if (res.statusCode !== 200) {
+        return callback(new Error('Could not login: ' + body.toString()));
+      }
 
-        return callback(null, response.data.authTokenHash, response.data);
-      }));
+      return callback(null, response.data.authTokenHash, response.data);
     });
-
-    req.on('error', function (err) {
-      return callback(err);
-    });
-
-    req.write(JSON.stringify({id: id}));
-    req.end();
   });
 }
